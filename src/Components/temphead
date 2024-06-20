@@ -1,0 +1,88 @@
+import React from 'react';
+import '../style.css'
+import { Link } from 'react-router-dom';
+
+import { PiHouseBold } from "react-icons/pi";
+import { MdOutlineAnalytics } from "react-icons/md";
+import { FaRegHeart, FaRegComment, FaRegShareSquare, FaSearch, FaRegMoon } from "react-icons/fa";
+import { AiOutlineUserAdd } from "react-icons/ai";
+import { BiLogOut } from "react-icons/bi";
+import { GiHamburgerMenu } from "react-icons/gi";
+
+
+const HeaderSidebar = () => {
+    return (
+        <>
+            <nav>
+                <div className="logo-name">
+                    <div className="logo-image mt-4">
+                        <img src="/images/logo-black.png" style={{ width: "100%" }} alt="" />
+                    </div>
+                </div>
+
+                <div className="menu-items">
+                    <ul className="nav-links ml-5">
+                        <li><Link to="/dashboard">
+                            <PiHouseBold className='inline mr-3 text-2xl' />
+                            <span className="link-name">Dashboard</span>
+                        </Link></li>
+                        <li> <Link to="/addclient">
+                            <AiOutlineUserAdd className='inline mr-3 text-2xl' />
+                            <span className="link-name">Add Clients</span>
+                        </Link></li>
+                        <li><Link to="/analytics">
+                            <MdOutlineAnalytics className='inline mr-3 text-2xl' />
+                            <span className="link-name">Analytics</span>
+                        </Link></li>
+                        <li><Link to="/like">
+                            <FaRegHeart className='inline mr-3 text-2xl' />
+                            <span className="link-name">Like</span>
+                        </Link></li>
+                        <li><Link to="/Comment">
+                            <FaRegComment className='inline mr-3 text-2xl' />
+                            <span className="link-name">Comment</span>
+                        </Link></li>
+                        <li><Link to="/Share">
+                            <FaRegShareSquare className='inline mr-3 text-2xl' />
+                            <span className="link-name">Share</span>
+                        </Link></li>
+                    </ul>
+
+                    <ul className="logout-mode">
+                        <li><Link to="/">
+                            <BiLogOut className='inline ' />
+                            <span className="link-name">Logout</span>
+                        </Link></li>
+
+                        <li className="mode">
+                            <Link to="#">
+                                <FaRegMoon className='inline' />
+                                <span className="link-name">Dark Mode</span>
+                            </Link>
+
+                            <div className="mode-toggle">
+                                <span className="switch"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div >
+            </nav >
+
+            <section className="dashboard">
+                <div className="top">
+                    <GiHamburgerMenu className='inline text-2xl' />
+
+                    <div className="search-box">
+                        <FaSearch className='absolute z-10 mt-3 ml-5 text-xl' />
+                        <input type="text" placeholder="Search here..." className='realtive' />
+                    </div>
+
+                    <img src="images/pic.png" alt="" />
+                </div>
+            </section >
+        </>
+
+    );
+}
+
+export default HeaderSidebar;
