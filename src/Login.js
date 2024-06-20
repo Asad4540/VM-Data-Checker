@@ -6,6 +6,7 @@ import { MdLockReset } from "react-icons/md";
 
 const Login = () => {
     return (
+        <>
         <div className="relative flex items-center justify-center min-h-screen bg-[#080710] font-poppins">
             <div className="absolute w-[570px] h-[620px] lg:w-[430px] lg:h-[520px]">
                 <div className="absolute w-[200px] h-[200px] bg-gradient-to-r from-[#1845ad] to-[#23a2f6] rounded-full left-[-80px] top-[-80px]"></div>
@@ -29,6 +30,7 @@ const Login = () => {
                 </div>
             </form>
         </div>
+        </>
     );
 };
 
