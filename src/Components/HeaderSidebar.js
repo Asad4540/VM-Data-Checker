@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../Dashboard.css'; // Assuming you saved the CSS as Dashboard.css
-import { UilEstate, UilUserPlus, UilChart, UilThumbsUp, UilComments, UilShare, UilSignout, UilMoon, UilBars, UilSearch, UilTachometerFastAlt, UilClockThree } from '@iconscout/react-unicons';
+import '../Pages/Dashboard.css'; // Assuming you saved the CSS as Dashboard.css
+import { UilEstate, UilUserPlus, UilChart, UilThumbsUp, UilComments, UilShare, UilSignout, UilMoon, UilBars, UilSearch } from '@iconscout/react-unicons';
 import { Link } from 'react-router-dom';
 
 
@@ -53,7 +53,7 @@ const HeaderSidebar = () => {
                     </ul>
                 </div>
             </nav>
-            <section className="dashboard">
+            <div className="dashboard">
                 <div className="top">
                     <UilBars className="sidebar-toggle" onClick={handleSidebarToggle} />
                     <div className="search-box">
@@ -62,10 +62,7 @@ const HeaderSidebar = () => {
                     </div>
                     <img src="images/pic.png" alt="Profile" />
                 </div>
-
-
-
-            </section >
+            </div >
         </div >
     );
 };

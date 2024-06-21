@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
-import Dashboard from './Dashboard';
+import Dashboard from './Pages/Dashboard';
 import Login from './Login';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import DashComp from './Components/DashComp';
 
 
 const App = () => {
@@ -11,8 +12,9 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
-          {/* <Dashboard path="/dashboard" exact component={HeaderSidebar} /> */}
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashcomp" element={<DashComp />} />
+
         </Routes>
       </Router>
     </>

@@ -29,7 +29,7 @@
 
 body {
     min-height: 100vh;
-    background-color: var(--primary-color);
+    background-color: var( --panel-color);
 }
 
 body.dark {
@@ -55,13 +55,13 @@ body.dark {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
+    background: var( --panel-color);
     border-radius: 12px;
     transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #0b3cc1;
+    background: #707070;
 }
 
 body.dark::-webkit-scrollbar-thumb:hover,
@@ -93,7 +93,7 @@ nav .logo-name {
 nav .logo-image {
     display: flex;
     justify-content: center;
-    min-width: 205px;
+    /* min-width: 205px; */
 }
 
 nav .logo-image img {
@@ -233,7 +233,7 @@ body.dark .switch:before {
     position: relative;
     left: 250px;
     background-color: var(--panel-color);
-    min-height: 100vh;
+    /* min-height: 100vh; */
     width: calc(100% - 250px);
     padding: 10px 14px;
     transition: var(--tran-05);
@@ -330,7 +330,7 @@ nav.close~.dashboard .top {
 }
 
 .dash-content .title .text {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 500;
     color: var(--text-color);
     margin-left: 10px;
