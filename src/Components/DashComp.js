@@ -3,8 +3,7 @@ import '../Pages/Dashboard.css'; // Assuming you saved the CSS as Dashboard.css
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FiUsers } from "react-icons/fi";
-import { BiCircleThreeQuarter } from "react-icons/bi";
-import { BsCalendar2Date,BsCalendar2DateFill } from "react-icons/bs";
+import { BsCalendar2DateFill } from "react-icons/bs";
 import { FaRegClock } from "react-icons/fa";
 import DatePickerDropdown from './DatePickerDropdown ';
 import { IoCalendarNumber } from "react-icons/io5";
