@@ -6,7 +6,8 @@ import { FiUsers } from "react-icons/fi";
 import { BsCalendar2DateFill } from "react-icons/bs";
 import { FaRegClock } from "react-icons/fa";
 import DatePickerDropdown from './DatePickerDropdown ';
-import { IoCalendarNumber } from "react-icons/io5";
+import { IoCalendarNumber,IoCloudDownload  } from "react-icons/io5";
+import { IoMdDownload } from "react-icons/io";
 
 const DashComp = () => {
     return (
@@ -42,17 +43,13 @@ const DashComp = () => {
                                         <IoCalendarNumber className='text-3xl' />
                                         <label htmlFor="yes-no-dropdown" className='text-2xl font-bold mb-2'>To</label>
                                         <DatePickerDropdown className='' />
-                                        {/* <select className='px-10 rounded-xl py-2 font-semibold'>
-                                            <option value="" disabled selected hidden>Select Day</option>
-                                            {Array.from({ length: 31 }, (_, i) => (
-                                                <option key={i + 1} value={i + 1}>
-                                                    {i + 1}
-                                                </option>
-                                            ))}
-                                        </select> */}
                                     </div>
                                 </div>
                             </form>
+                        </div>
+
+                        <div className='flex justify-center items-center mt-5'>
+                            <button className=' px-10 py-1 rounded-md mt-3 bg-red-500 text-gray-50 font-semibold hover:bg-red-600'>Get Report<IoMdDownload className='inline ml-1 text-xl'/></button>
                         </div>
 
 
