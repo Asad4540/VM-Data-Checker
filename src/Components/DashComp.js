@@ -4,15 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FiUsers } from "react-icons/fi";
 import { BiCircleThreeQuarter } from "react-icons/bi";
-import { BsCalendar2Date } from "react-icons/bs";
+import { BsCalendar2Date,BsCalendar2DateFill } from "react-icons/bs";
 import { FaRegClock } from "react-icons/fa";
+import DatePickerDropdown from './DatePickerDropdown ';
+import { IoCalendarNumber } from "react-icons/io5";
 
 const DashComp = () => {
     return (
-
         <>
-            <div className='ml-[270px] mt-[70px] mr-[10px]'>
-                <div className='px-10 py-1'>
+            <div className='ml-[270px] mt-[70px] mr-[10px] '>
+                <div className='px-10'>
                     <div className="dash-content">
                         <div className="overview">
                             <form>
@@ -22,7 +23,7 @@ const DashComp = () => {
                                 </div>
                                 <div className="boxes">
                                     <div className="box box1">
-                                        <FiUsers className='text-4xl' />
+                                        <FiUsers className='text-3xl' />
                                         <label htmlFor="yes-no-dropdown" className='text-2xl font-bold mb-2'>Clients </label>
                                         <select className='px-10 rounded-xl py-2 font-semibold'>
                                             <option value="" disabled selected hidden>Select Client</option>
@@ -34,27 +35,22 @@ const DashComp = () => {
                                         </select>
                                     </div>
                                     <div className="box box2">
-                                        <BiCircleThreeQuarter className='text-4xl' />
-                                        <label htmlFor="yes-no-dropdown" className='text-2xl font-bold mb-2'>Quarter</label>
-                                        <select className='pl-10 rounded-xl py-2 font-semibold'>
-                                            <option value="" disabled selected hidden>Select Quarter</option>
-                                            <option>January - March</option>
-                                            <option>April - June</option>
-                                            <option>July - September</option>
-                                            <option>October - December</option>
-                                        </select>
+                                        <BsCalendar2DateFill className='text-3xl' />
+                                        <label htmlFor="yes-no-dropdown" className='text-2xl font-bold mb-2'>From</label>
+                                        <DatePickerDropdown className='' />
                                     </div>
                                     <div className="box box3">
-                                        <BsCalendar2Date className='text-4xl' />
-                                        <label htmlFor="yes-no-dropdown" className='text-2xl font-bold mb-2'>Date </label>
-                                        <select className='px-10 rounded-xl py-2 font-semibold'>
+                                        <IoCalendarNumber className='text-3xl' />
+                                        <label htmlFor="yes-no-dropdown" className='text-2xl font-bold mb-2'>To</label>
+                                        <DatePickerDropdown className='' />
+                                        {/* <select className='px-10 rounded-xl py-2 font-semibold'>
                                             <option value="" disabled selected hidden>Select Day</option>
                                             {Array.from({ length: 31 }, (_, i) => (
                                                 <option key={i + 1} value={i + 1}>
                                                     {i + 1}
                                                 </option>
                                             ))}
-                                        </select>
+                                        </select> */}
                                     </div>
                                 </div>
                             </form>
@@ -127,4 +123,5 @@ const DashComp = () => {
 }
 
 export default DashComp;
+
 
