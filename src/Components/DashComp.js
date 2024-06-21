@@ -1,8 +1,11 @@
 import React from 'react'
 import '../Pages/Dashboard.css'; // Assuming you saved the CSS as Dashboard.css
-import { UilThumbsUp, UilComments, UilShare, UilClockThree } from '@iconscout/react-unicons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import { FiUsers } from "react-icons/fi";
+import { BiCircleThreeQuarter } from "react-icons/bi";
+import { BsCalendar2Date } from "react-icons/bs";
+import { FaRegClock } from "react-icons/fa";
 
 const DashComp = () => {
     return (
@@ -15,26 +18,43 @@ const DashComp = () => {
                             <form>
                                 <div className="title">
                                     <FontAwesomeIcon icon={faUsers} className='text-3xl mr-1' />
-                                    <span className="ml-[10px] text-3xl font-semibold">VM CLIENTS</span>
+                                    <span className="ml-[10px] text-3xl font-semibold">VM DATA CHECKER</span>
                                 </div>
                                 <div className="boxes">
                                     <div className="box box1">
-                                        <label htmlFor="yes-no-dropdown" className='text-xl font-bold mb-2'>Client </label>
-                                        <select className='px-2 py-1 font-semibold'>
+                                        <FiUsers className='text-4xl' />
+                                        <label htmlFor="yes-no-dropdown" className='text-2xl font-bold mb-2'>Clients </label>
+                                        <select className='px-10 rounded-xl py-2 font-semibold'>
                                             <option value="" disabled selected hidden>Select Client</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
+                                            <option>Microsoft</option>
+                                            <option>Azure</option>
+                                            <option>ServiceNow</option>
+                                            <option>Nice</option>
+                                            <option>Q-Flow</option>
                                         </select>
                                     </div>
                                     <div className="box box2">
-                                        <UilComments />
-                                        <span className="text">Comments</span>
-                                        <span className="number">20,120</span>
+                                        <BiCircleThreeQuarter className='text-4xl' />
+                                        <label htmlFor="yes-no-dropdown" className='text-2xl font-bold mb-2'>Quarter</label>
+                                        <select className='pl-10 rounded-xl py-2 font-semibold'>
+                                            <option value="" disabled selected hidden>Select Quarter</option>
+                                            <option>January - March</option>
+                                            <option>April - June</option>
+                                            <option>July - September</option>
+                                            <option>October - December</option>
+                                        </select>
                                     </div>
                                     <div className="box box3">
-                                        <UilShare />
-                                        <span className="text">Total Share</span>
-                                        <span className="number">10,120</span>
+                                        <BsCalendar2Date className='text-4xl' />
+                                        <label htmlFor="yes-no-dropdown" className='text-2xl font-bold mb-2'>Date </label>
+                                        <select className='px-10 rounded-xl py-2 font-semibold'>
+                                            <option value="" disabled selected hidden>Select Day</option>
+                                            {Array.from({ length: 31 }, (_, i) => (
+                                                <option key={i + 1} value={i + 1}>
+                                                    {i + 1}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </div>
                             </form>
@@ -43,8 +63,8 @@ const DashComp = () => {
 
                         <div className="activity">
                             <div className="title">
-                                <UilClockThree />
-                                <span className="text">Recent Activity</span>
+                                <FaRegClock className='text-3xl' />
+                                <span className="ml-[10px] text-3xl font-semibold">Activity</span>
                             </div>
                             <div className="activity-data">
                                 <div className="data names">
