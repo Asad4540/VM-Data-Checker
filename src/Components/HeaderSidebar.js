@@ -25,6 +25,11 @@ const HeaderSidebar = () => {
         localStorage.setItem('status', !isSidebarOpen ? 'open' : 'close');
     };
 
+    const handleLogout = () => {
+        sessionStorage.removeItem('token'); // Remove the token from local storage
+        // Optionally, you can redirect to the login page here if needed
+    };
+
     return (
         <div className={`body ${isDarkMode ? 'dark' : ''}`}>
             <nav className={`${isSidebarOpen ? '' : 'close'}`}>
@@ -42,8 +47,9 @@ const HeaderSidebar = () => {
                         <li><Link to='/comment'><UilComments className='lgs mr-2 -ml-3' /><span className="link-name">Comment</span></Link></li>
                         <li><Link to='/share'><UilShare className='lgs mr-2 -ml-3' /><span className="link-name">Share</span></Link></li>
                     </ul>
+
                     <ul className="logout-mode ml-6">
-                        <li><Link to='/'><UilSignout className="lgs mr-2 -ml-3" /><span className="link-name">Logout</span></Link></li>
+                        <li><Link to='/' onClick={handleLogout}><UilSignout className="lgs mr-2 -ml-3" /><span className="link-name">Logout</span></Link></li>
                         <li className="mode">
                             <Link to="#" onClick={handleModeToggle}><UilMoon className="lgs mr-2 -ml-3" /><span className="link-name">Dark Mode</span></Link>
                             <div className="mode-toggle" onClick={handleModeToggle}>
