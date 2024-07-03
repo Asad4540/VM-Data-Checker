@@ -73,7 +73,7 @@ const Data = () => {
 
     return (
         <>
-            <div className='ml-[270px] mt-[70px] mr-[10px]'>
+            <div className='ml-[100px] mt-[70px] mr-[10px]'>
                 <div className='px-10'>
                     <div className="dash-content">
                         <div className="overview">
@@ -88,7 +88,7 @@ const Data = () => {
                                         <label htmlFor="product-dropdown" className='text-2xl font-bold mb-2'>Clients</label>
                                         <select
                                             id="product-dropdown"
-                                            className='px-10 rounded-xl py-2 font-semibold'
+                                            className='md:px-10 md:py-2 px-4 rounded-xl  font-semibold'
                                             value={selectedProduct}
                                             onChange={handleProductChange}
                                         >
@@ -128,46 +128,46 @@ const Data = () => {
                             {loading && <p>Loading...</p>}
                             {error && <p>Error: {error.message}</p>}
                             {!loading && !error && filteredData.length > 0 && (
-                                <table className='table-auto w-full'>
+                                <table className='table-auto w-full border border-black border-1px'>
                                     <thead>
-                                        <tr>
-                                            <th className='px-4 py-2'>Sr No.</th>
-                                            <th className='px-4 py-2'>Product</th>
-                                            <th className='px-4 py-2'>First Name</th>
-                                            <th className='px-4 py-2'>Last Name</th>
-                                            <th className='px-4 py-2'>Email</th>
-                                            <th className='px-4 py-2'>Company Name</th>
-                                            <th className='px-4 py-2'>Job Title</th>
-                                            <th className='px-4 py-2'>Country</th>
-                                            <th className='px-4 py-2'>Challenges</th>
-                                            <th className='px-4 py-2'>Technology Refresh</th>
-                                            <th className='px-4 py-2'>Target Environment</th>
-                                            <th className='px-4 py-2'>Migration Manager</th>
-                                            <th className='px-4 py-2'>Last Refresh</th>
-                                            <th className='px-4 py-2'>Open Challenges</th>
-                                            <th className='px-4 py-2'>Consent Checkbox</th>
-                                            <th className='px-4 py-2'>Created At</th>
+                                        <tr className='bg-blue-800 text-gray-50' >
+                                            <th className='px-4 py-2 border border-black border-1px'>Sr No.</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Product</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>First Name</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Last Name</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Email</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Company Name</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Job Title</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Country</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Challenges</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Technology Refresh</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Target Environment</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Migration Manager</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Last Refresh</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Open Challenges</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Consent Checkbox</th>
+                                            <th className='px-4 py-2 border border-black border-1px'>Created At</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {filteredData.map((item, index) => (
-                                            <tr key={index}>
-                                                <td className='border px-4 py-2'>{index + 1}</td>
-                                                <td className='border px-4 py-2'>{item.product}</td>
-                                                <td className='border px-4 py-2'>{item.firstName}</td>
-                                                <td className='border px-4 py-2'>{item.LastName}</td>
-                                                <td className='border px-4 py-2'>{item.email}</td>
-                                                <td className='border px-4 py-2'>{item.companyName}</td>
-                                                <td className='border px-4 py-2'>{item.jobTitle}</td>
-                                                <td className='border px-4 py-2'>{item.country}</td>
-                                                <td className='border px-4 py-2'>{item.challenges}</td>
-                                                <td className='border px-4 py-2'>{item.technologyRefresh}</td>
-                                                <td className='border px-4 py-2'>{item.targetEnvironment}</td>
-                                                <td className='border px-4 py-2'>{item.migrationManager}</td>
-                                                <td className='border px-4 py-2'>{item.lastRefresh}</td>
-                                                <td className='border px-4 py-2'>{item.openChallenges}</td>
-                                                <td className='border px-4 py-2'>{item.consentCheckbox}</td>
-                                                <td className='border px-4 py-2'>{item.created_at}</td>
+                                            <tr key={index} className='border '>
+                                                <td className='border border-black border-1px text-center'>{index + 1}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.product}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.firstName}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.LastName}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.email}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.companyName}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.jobTitle}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.country}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.challenges}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.technologyRefresh}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.targetEnvironment}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.migrationManager}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.lastRefresh}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.openChallenges}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.consentCheckbox}</td>
+                                                <td className='border border-black border-1px text-center p-2'>{item.created_at}</td>
                                             </tr>
                                         ))}
                                     </tbody>
