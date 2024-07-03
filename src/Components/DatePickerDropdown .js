@@ -1,22 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './DatePickerStyles.css'
+import './DatePickerStyles.css';
 
-const DatePickerDropdown = () => {
-    const [selectedDate, setSelectedDate] = useState(null);
-
-    const handleChange = (date) => {
-        setSelectedDate(date);
-    };
-
+const DatePickerDropdown = ({ selectedDate, onChange }) => {
     return (
         <div>
-
             <DatePicker
                 id="date-picker"
                 selected={selectedDate}
-                onChange={handleChange}
+                onChange={onChange}
                 placeholderText="Select Date"
                 dateFormat="dd/MM/yyyy"
                 isClearable
