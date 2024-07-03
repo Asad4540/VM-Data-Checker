@@ -3,9 +3,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './DatePickerStyles.css';
 
-const DatePickerDropdown = ({ selectedDate, onChange }) => {
+const DatePickerDropdown = ({ selectedDate, onChange,className }) => {
     return (
-        <div>
+        <div className={className}>
             <DatePicker
                 id="date-picker"
                 selected={selectedDate}
