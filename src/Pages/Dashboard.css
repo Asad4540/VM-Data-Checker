@@ -235,7 +235,7 @@ body.dark .switch:before {
     background-color: var(--panel-color);
     /* min-height: 100vh; */
     width: calc(100% - 250px);
-    padding: 10px 14px;
+    padding: 10px 0px;
     transition: var(--tran-05);
 }
 

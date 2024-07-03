@@ -31,7 +31,7 @@ const HeaderSidebar = () => {
     };
 
     return (
-        <div className={`body ${isDarkMode ? 'dark' : ''}`}>
+        <div className={`body ${isDarkMode ? 'dark' : ''} absolute z-20`}>
             <nav className={`${isSidebarOpen ? '' : 'close'}`}>
                 <div className="logo-name">
                     <div className="logo-image mt-4">
@@ -41,7 +41,7 @@ const HeaderSidebar = () => {
                 <div className="menu-items">
                     <ul className="nav-links ml-6">
                         <li><Link to='/dashboard'><UilEstate className='lgs mr-2 -ml-3' /><span className="link-name">Dashboard</span></Link></li>
-                        <li><Link to='/addClient'><UilUserPlus className='lgs mr-2 -ml-3' /><span className="link-name">Add Client</span></Link></li>
+                        <li><Link to='/data'><UilUserPlus className='lgs mr-2 -ml-3' /><span className="link-name">Add Client</span></Link></li>
                         <li><Link to='/analytics'><UilChart className='lgs mr-2 -ml-3' /><span className="link-name">Analytics</span></Link></li>
                         <li><Link to='/like'><UilThumbsUp className='lgs mr-2 -ml-3' /><span className="link-name">Like</span></Link></li>
                         <li><Link to='/comment'><UilComments className='lgs mr-2 -ml-3' /><span className="link-name">Comment</span></Link></li>
