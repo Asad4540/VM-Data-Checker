@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import '../Pages/Dashboard.css'; // Assuming you saved the CSS as Dashboard.css
 import { UilEstate, UilUserPlus, UilChart, UilThumbsUp, UilComments, UilShare, UilSignout, UilMoon, UilBars, UilSearch } from '@iconscout/react-unicons';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
+
 
 
 const HeaderSidebar = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
 
     useEffect(() => {
         const mode = localStorage.getItem('mode');
@@ -29,6 +33,7 @@ const HeaderSidebar = () => {
         sessionStorage.removeItem('token'); // Remove the token from local storage
         // Optionally, you can redirect to the login page here if needed
     };
+
 
     return (
         <div className={`body ${isDarkMode ? 'dark' : ''} absolute z-20`}>
@@ -62,9 +67,13 @@ const HeaderSidebar = () => {
             <div className="dashboard">
                 <div className="top">
                     <UilBars className="sidebar-toggle" onClick={handleSidebarToggle} />
-                    <div className="search-box">
+                    {/* <div className="search-box">
                         <UilSearch className='absolute z-10 mt-2 ml-4' />
                         <input type="text" placeholder="Search here..." className='relative' />
+                    </div> */}
+                    <div className="title">
+                        <FontAwesomeIcon icon={faUsers} className='text-3xl mr-1 mx-auto' />
+                        <span className="ml-[10px] text-3xl font-semibold mx-auto">VM DATA CHECKER</span>
                     </div>
                     <img src="images/pic.png" alt="Profile" />
                 </div>

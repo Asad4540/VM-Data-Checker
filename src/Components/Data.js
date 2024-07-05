@@ -4,12 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FiUsers } from 'react-icons/fi';
 import { BsCalendar2DateFill } from 'react-icons/bs';
-import { FaRegClock } from 'react-icons/fa';
+// import { FaRegClock } from 'react-icons/fa';
 import DatePickerDropdown from './DatePickerDropdown ';
 import { IoCalendarNumber } from 'react-icons/io5';
 import { IoMdDownload } from "react-icons/io";
 import Pagination from './Pagination'; // Import the Pagination component
 import * as XLSX from 'xlsx'; // Import xlsx library
+import { UilSearch } from '@iconscout/react-unicons';
+
 
 const Data = () => {
     const [data, setData] = useState([]);
@@ -20,6 +22,7 @@ const Data = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 10; // Set the number of items per page
     useEffect(() => {
         // Fetch data from your API on component mount
@@ -40,6 +43,15 @@ const Data = () => {
                 setLoading(false);
             });
     }, []);
+    useEffect(() => {
+        const filtered = data.filter(item =>
+            Object.values(item).some(value =>
+                value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        );
+        setFilteredData(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, data]);
 
     const handleProductChange = (event) => {
         setSelectedProduct(event.target.value);
@@ -79,10 +91,10 @@ const Data = () => {
         const worksheet = XLSX.utils.json_to_sheet(filteredData);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
-        
+
         // Get current date and time
         const now = new Date();
-        
+
         // Format date and time
         const formatDate = (date) => {
             const dd = String(date.getDate()).padStart(2, '0');
@@ -92,16 +104,16 @@ const Data = () => {
             const min = String(date.getMinutes()).padStart(2, '0');
             return `${dd}/${mm}/${yyyy} time:${hh}:${min}`;
         };
-        
+
         const timestamp = formatDate(now);
-        
+
         // Create filename with formatted timestamp
         const filename = `date:${timestamp}.xlsx`;
-    
+
         // Save the file
         XLSX.writeFile(workbook, filename);
     };
-    
+
 
     // Calculate the data to be displayed on the current page
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -117,10 +129,20 @@ const Data = () => {
                     <div className="dash-content">
                         <div className="overview">
                             <form>
-                                <div className="title">
-                                    <FontAwesomeIcon icon={faUsers} className='text-3xl mr-1' />
-                                    <span className="ml-[10px] text-3xl font-semibold">VM DATA CHECKER</span>
-                                </div>
+                                {/* <div className="title">
+                                    <FontAwesomeIcon icon={faUsers} className='text-3xl mr-1 mx-auto' />
+                                    <span className="ml-[10px] text-3xl font-semibold mx-auto">VM DATA CHECKER</span>
+                                </div> */}
+                                {/* <div className="mb-4">
+                                    <UilSearch className='absolute z-10 mt-2 ml-4' />
+                                    <input
+                                        type="text"
+                                        placeholder="Search Clients..."
+                                        className="pl-14 px-4 py-2 w-full border rounded"
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                    />
+                                </div> */}
                                 <div className="boxes">
                                     <div className="box box1">
                                         <FiUsers className='text-3xl' />
@@ -162,16 +184,26 @@ const Data = () => {
 
 
                         <div className="-mt-10">
-                            <div className='flex justify-end items-center'>
-                            {/* <div className="flex mt-16">
+                            <div className='flex justify-between items-center'>
+                                {/* <div className="flex mt-16">
                                 <FaRegClock className='text-3xl' />
                                 <span className="ml-[10px] text-3xl font-semibold">Activity</span>
                             </div> */}
-                            <div className='mt-16 mb-1 '>
-                                <button className='px-5 py-1 rounded-md mr-5 bg-green-800 text-gray-50 font-semibold hover:bg-green-900' onClick={handleDownloadExcel}>
-                                    Download Excel <IoMdDownload className='inline ml-1 text-xl' />
-                                </button>
-                            </div>
+                                <div className="mt-14 mb-1">
+                                    <UilSearch className='absolute z-10 mt-2 ml-4' />
+                                    <input
+                                        type="text"
+                                        placeholder="Search Clients..."
+                                        className="pl-14 px-4 py-2 w-[800px] border rounded"
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                    />
+                                </div>
+                                <div className='mt-14 mb-1 '>
+                                    <button className='px-5 py-3 rounded-md mr-5 bg-green-800 text-gray-50 font-semibold hover:bg-green-900' onClick={handleDownloadExcel}>
+                                        Download Excel <IoMdDownload className='inline ml-1 text-xl' />
+                                    </button>
+                                </div>
                             </div>
                             {loading && <p>Loading...</p>}
                             {error && <p>Error: {error.message}</p>}
@@ -223,8 +255,8 @@ const Data = () => {
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div className='flex justify-center items-center mt-5'>
-                                        <button
+                                    <div className='flex justify-center items-center mt-5 ' >
+                                        <button style={{ cursor: "pointer" }}
                                             className='px-4 py-2 mx-1 bg-gray-300 rounded hover:bg-gray-400'
                                             disabled={currentPage === 1}
                                             onClick={() => setCurrentPage(prevPage => Math.max(prevPage - 1, 1))}
@@ -237,7 +269,7 @@ const Data = () => {
                                             onPageChange={setCurrentPage}
                                         />
                                         <button
-                                            className='px-4 py-2 mx-1 bg-gray-300 rounded hover:bg-gray-400'
+                                            className='px-4 py-2 mx-1 bg-gray-300 rounded hover:bg-gray-400 hover:bg-gray-400'
                                             disabled={currentPage === totalPages}
                                             onClick={() => setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages))}
                                         >
