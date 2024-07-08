@@ -3,26 +3,26 @@ import { useNavigate } from 'react-router-dom';
 import './App.css'; // Include your custom styles if needed
 import { BiLogIn } from "react-icons/bi";
 import { MdLockReset } from "react-icons/md";
-
+ 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-
+ 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const response = await fetch('http://localhost:3001/login', {
+ 
+        const response = await fetch('http://localhost:3001/api/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ username, password })
         });
-
+ 
         const result = await response.json();
-
+ 
         if (result.status === 'success') {
             sessionStorage.setItem('token', result.token);
             navigate('/dashboard');
@@ -30,14 +30,14 @@ const Login = () => {
             setError(result.message);
         }
     };
-
+ 
     return (
         <div className="relative flex items-center justify-center min-h-screen bg-[#080710] font-poppins">
             <div className="absolute w-[570px] h-[620px] lg:w-[430px] lg:h-[520px]">
                 <div className="absolute w-[200px] h-[200px] bg-gradient-to-r from-[#1845ad] to-[#23a2f6] rounded-full left-[-80px] top-[-80px]"></div>
                 <div className="absolute w-[200px] h-[200px] bg-gradient-to-r from-[#ff512f] to-[#f09819] rounded-full right-[-80px] bottom-[-80px]"></div>
             </div>
-
+ 
             <form className="relative w-[550px] h-[620px] lg:w-[400px] lg:h-[520px] p-[20px_35px] bg-[rgba(255,255,255,0.13)] rounded-[10px] backdrop-blur-[10px] border-[2px] border-[rgba(255,255,255,0.1)] shadow-[0_0_40px_rgba(8,7,16,0.6)]" onSubmit={handleSubmit}>
                 <img src="/images/logo.webp" className="mx-auto" style={{ width: '60%' }} alt="Logo" />
                 <p className="text-4xl text-yellow-400 font-bold text-center mt-3">VM Data Checker</p>
@@ -58,5 +58,5 @@ const Login = () => {
         </div>
     );
 };
-
+ 
 export default Login;
