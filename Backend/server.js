@@ -5,13 +5,17 @@ const cors = require('cors');
 const mysql = require('mysql2');
 // const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+const  data=require('./Routes/data')
+const  microsoft=require('./Routes/microsoft')
+const  azure=require('./Routes/azure')
+const  postData=require('./Routes/postData')
+const users=require('./Routes/users')
 const app = express();
 const port = 3001;
-
+const jwtSecret = process.env.JWT_SECRET;
 app.use(cors());
 app.use(bodyParser.json());
-
+ 
 // MySQL Database Connection
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -19,7 +23,7 @@ const db = mysql.createConnection({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
 });
-
+ 
 db.connect(err => {
     if (err) {
         console.error('Database connection failed:', err.stack);
@@ -27,89 +31,48 @@ db.connect(err => {
     }
     console.log('Connected to database.');
 });
-
+//  // middleware
+ 
+// Use the imported route
+app.use('/data',data);
+app.use('/microsoft/data',microsoft);
+app.use('/azure/data',azure);
+app.use('/azure/data',postData);
+app.use('/api/user',users);
 // Authentication Route
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-
-    db.query('SELECT * FROM users WHERE username = ?', [username], (error, results) => {
-        
-        if (error) throw error;
-        if (results.length === 0) {
-            return res.status(401).json({ status: 'error', message: 'Invalid username or password' });
-        }
-
-        const user = results[0];
-
-        if (password !== user.password) {
-            return res.status(401).json({ status: 'error', message: 'Invalid username or password' });
-          }
-      
-          const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-          res.json({ status: 'success', message: 'Login successful', token });
-        });
-      });
-
-
-// Middleware to protect routes
-const verifyToken = (req, res, next) => {
-    const token = req.headers['authorization'];
-    if (!token) {
-        return res.status(403).json({ status: 'error', message: 'No token provided' });
-    }
-
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(500).json({ status: 'error', message: 'Failed to authenticate token' });
-        }
-
-        req.userId = decoded.id;
+ 
+ 
+ 
+ 
+// Middleware to authenticate token and retrieve user info
+const authenticateToken = (req, res, next) => {
+    const token = req.query.token || req.headers['authorization'];
+    if (!token) return res.sendStatus(401);
+ 
+    jwt.verify(token.split(' ')[1], jwtSecret, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
         next();
     });
 };
-
-//Ravidra code
-
-// Protected route example
-app.get('/dashboard', verifyToken, (req, res) => {
-    res.json({ message: 'Welcome to the Dashboard!', userId: req.userId });
-});
-
-// POST endpoint to handle form submission
-app.post('/api/form', (req, res) => {
-    const {product, firstName, lastName, email, companyName, jobTitle, country, challenges, technologyRefresh, targetEnvironment, migrationManager, lastRefresh, openChallenges, consentCheckbox } = req.body;
-
-    const query = `
-        INSERT INTO data 
-        (product,firstName, lastName, email, companyName, jobTitle, country, challenges, technologyRefresh, targetEnvironment, migrationManager, lastRefresh, openChallenges, consentCheckbox) 
-        VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    db.query(query, [product,firstName, lastName, email, companyName, jobTitle, country, challenges, technologyRefresh, targetEnvironment, migrationManager, lastRefresh, openChallenges, consentCheckbox ? 1 : 0], (err, result) => {
+ 
+// Endpoint to get username
+app.get('/user', authenticateToken, (req, res) => {
+    const userId = req.user.id;
+    db.query('SELECT username FROM users WHERE id = ?', [userId], (err, result) => {
         if (err) {
-            console.error('Error inserting data:', err);
-            res.status(500).send('Server error');
+            res.status(500).json({ status: 'error', message: err.message });
             return;
         }
-        res.status(200).send('Form submitted successfully');
-    });
-});
-
-// GET endpoint to retrieve form data
-app.get('/api/formdata', (req, res) => {
-    const query = 'SELECT * FROM data';
-
-    db.query(query, (err, result) => {
-        if (err) {
-            console.error('Error fetching data:', err);
-            res.status(500).send('Server error');
-            return;
+        if (result.length > 0) {
+            res.json({ status: 'success', username: result[0].username });
+        } else {
+            res.status(404).json({ status: 'error', message: 'User not found' });
         }
-        res.status(200).json(result);
     });
 });
-
-
+ 
+ 
 // CORS headers for handling preflight requests
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -117,9 +80,9 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Headers", "Content-Type");
     next();
 });
-
+ 
 //Ravidra code
-
+ 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

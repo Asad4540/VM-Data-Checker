@@ -1,40 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import '../Pages/Dashboard.css'; // Assuming you saved the CSS as Dashboard.css
-import { UilEstate, UilUserPlus, UilChart, UilThumbsUp, UilComments, UilShare, UilSignout, UilMoon, UilBars, UilSearch } from '@iconscout/react-unicons';
+import { UilEstate, UilUserPlus, UilChart, UilThumbsUp, UilComments, UilShare, UilSignout, UilMoon, UilBars } from '@iconscout/react-unicons';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
-
-
-
+ 
+ 
+ 
 const HeaderSidebar = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-
+    const [username, setUsername] = useState('');
+ 
+ 
     useEffect(() => {
         const mode = localStorage.getItem('mode');
         const status = localStorage.getItem('status');
         if (mode === 'dark') setIsDarkMode(true);
         if (status === 'close') setIsSidebarOpen(false);
     }, []);
-
+    useEffect(() => {
+        const fetchUsername = async () => {
+            const token = sessionStorage.getItem('token');
+            if (token) {
+                const response = await fetch(`http://localhost:3001/user`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const result = await response.json();
+ 
+                if (result.status === 'success') {
+                    setUsername(result.username);
+                }
+            }
+        };
+ 
+        fetchUsername();
+    }, []);
+ 
     const handleModeToggle = () => {
         setIsDarkMode(!isDarkMode);
         localStorage.setItem('mode', !isDarkMode ? 'dark' : 'light');
     };
-
+ 
     const handleSidebarToggle = () => {
         setIsSidebarOpen(!isSidebarOpen);
         localStorage.setItem('status', !isSidebarOpen ? 'open' : 'close');
     };
-
+ 
     const handleLogout = () => {
         sessionStorage.removeItem('token'); // Remove the token from local storage
         // Optionally, you can redirect to the login page here if needed
     };
-
-
+ 
+ 
     return (
         <div className={`body ${isDarkMode ? 'dark' : ''} absolute z-20`}>
             <nav className={`${isSidebarOpen ? '' : 'close'}`}>
@@ -52,7 +72,7 @@ const HeaderSidebar = () => {
                         <li><Link to='/comment'><UilComments className='lgs mr-2 -ml-3' /><span className="link-name">Comment</span></Link></li>
                         <li><Link to='/share'><UilShare className='lgs mr-2 -ml-3' /><span className="link-name">Share</span></Link></li>
                     </ul>
-
+ 
                     <ul className="logout-mode ml-6">
                         <li><Link to='/' onClick={handleLogout}><UilSignout className="lgs mr-2 -ml-3" /><span className="link-name">Logout</span></Link></li>
                         <li className="mode">
@@ -75,11 +95,14 @@ const HeaderSidebar = () => {
                         <FontAwesomeIcon icon={faUsers} className='text-3xl mr-1 mx-auto' />
                         <span className="ml-[10px] text-3xl font-semibold mx-auto">VM DATA CHECKER</span>
                     </div>
-                    <img src="images/pic.png" alt="Profile" />
+                    <div className='flex items-center gap-1 ' >
+                        {username && <p className="text-lg border border-black p-1 rounded-md ">Hi, {username}</p>}
+                        <img src="images/pic.png" alt="Profile" />
+                    </div>
                 </div>
             </div >
         </div >
     );
 };
-
+ 
 export default HeaderSidebar;
