@@ -4,6 +4,7 @@ import { UilEstate, UilUserPlus, UilChart, UilThumbsUp, UilComments, UilShare, U
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import Cookies from 'js-cookie';
  
  
  
@@ -21,7 +22,7 @@ const HeaderSidebar = () => {
     }, []);
     useEffect(() => {
         const fetchUsername = async () => {
-            const token = sessionStorage.getItem('token');
+            const token = Cookies.get('token');
             if (token) {
                 const response = await fetch(`http://localhost:3001/user`, {
                     headers: {
@@ -96,7 +97,7 @@ const HeaderSidebar = () => {
                         <span className="ml-[10px] text-3xl font-semibold mx-auto">VM DATA CHECKER</span>
                     </div>
                     <div className='flex items-center gap-1 ' >
-                        {username && <p className="text-lg border border-black p-1 rounded-md ">Hi, {username}</p>}
+                        {username && <p className="text-lg border border-black bg-yellow-300 p-1 rounded-md ">Hi, {username}</p>}
                         <img src="images/pic.png" alt="Profile" />
                     </div>
                 </div>

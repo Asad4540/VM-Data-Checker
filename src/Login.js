@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './App.css'; // Include your custom styles if needed
 import { BiLogIn } from "react-icons/bi";
 import { MdLockReset } from "react-icons/md";
+import Cookies from 'js-cookie';
+
  
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -24,7 +26,7 @@ const Login = () => {
         const result = await response.json();
  
         if (result.status === 'success') {
-            sessionStorage.setItem('token', result.token);
+            Cookies.set('token', result.token, { expires: 7 }); // Cookie expires in 7 days
             navigate('/dashboard');
         } else {
             setError(result.message);

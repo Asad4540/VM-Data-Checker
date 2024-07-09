@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './Login';
 import Dashboard from './Pages/Dashboard';
 import Data from './Components/Data';
+import Cookies from 'js-cookie';
 
 const isAuthenticated = () => {
-    const token = sessionStorage.getItem('token');
+    const token = Cookies.get('token');
     return !!token;
 };
 
