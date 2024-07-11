@@ -24,7 +24,7 @@ const Data = () => {
     const apiUrls = {
         microsoft: "http://localhost:3001/microsoft/data/api/micro",
         azure: "http://localhost:3001/azure/data/api/azure",
-        servicenow: "http://localhost:3001/data/api/formdata",
+        userdetails: "http://localhost:3001/data/api/formdata",
         nice: "http://localhost:3001/nice/api/formdata",
         qflow: "http://localhost:3001/qflow/api/formdata"
     };
@@ -68,14 +68,14 @@ const Data = () => {
  
                 if (startDate && endDate) {
                     filtered = filtered.filter(item => {
-                        const itemDate = new Date(item.created_at);
+                        const itemDate = new Date(item.createdAt);
                         let lastDate = new Date(endDate);
                         lastDate.setDate(lastDate.getDate() + 1);
                         return itemDate > startDate && itemDate < lastDate;
                     });
                 }
  
-                filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setData(filtered);
                 setFilteredData(filtered);
                 setLoading(false);
@@ -131,7 +131,7 @@ const Data = () => {
                                             <option value="" disabled hidden>Select Client</option>
                                             <option value="microsoft">Microsoft</option>
                                             <option value="azure">Azure</option>
-                                            <option value="servicenow">ServiceNow</option>
+                                            <option value="userdetails">ServiceNow</option>
                                             <option value="nice">Nice</option>
                                             <option value="qflow">Q-Flow</option>
                                         </select>
@@ -183,42 +183,47 @@ const Data = () => {
                                             <thead>
                                             <tr className='bg-blue-800 text-gray-50' >
                                                     <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Sr No.</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Product</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>First Name</th>
+                                                   <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>First Name</th>
                                                     <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Last Name</th>
                                                     <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Email</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Company Name</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Job Title</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Phone</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Company</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>EmployeeRange</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Job Role</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Department</th>
                                                     <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Country</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Challenges</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Technology Refresh</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Target Environment</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Migration Manager</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Last Refresh</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Open Challenges</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Consent Checkbox</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Created At</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>fileUrl</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>privacy</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>unique_token</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>optintype</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>CreatedAt</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>singleOptInTime</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>doubleOptInTime</th>
+                                                   
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {currentData.map((item, index) => (
                                                <tr key={index} className='border '>
                                                <td className='border border-black border-1px text-center'>{indexOfFirstItem + index + 1}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.product}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.firstName}</td>
+                                            
+                                               <td className='border border-black border-1px text-center p-2'>{item.FirstName}</td>
                                                <td className='border border-black border-1px text-center p-2'>{item.LastName}</td>
                                                <td className='border border-black border-1px text-center p-2'>{item.email}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.companyName}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.jobTitle}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.country}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.challenges}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.technologyRefresh}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.targetEnvironment}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.migrationManager}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.lastRefresh}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.openChallenges}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.consentCheckbox}</td>
-                                               <td className='border border-black border-1px text-center p-2'>{item.created_at}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.Phone}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.Company}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.EmployeeRange}</td>
+                                              <td className='border border-black border-1px text-center p-2'>{item.Jobrole}</td>
+                                              <td className='border border-black border-1px text-center p-2'>{item.Department}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.Country}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.fileUrl}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.privacy}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.unique_token}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.optintype}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.createdAt}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.singleOptInTime}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.doubleOptInTime}</td>
+                                               
                                            </tr>
                                                 ))}
                                             </tbody>

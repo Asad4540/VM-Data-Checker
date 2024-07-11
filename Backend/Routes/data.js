@@ -4,7 +4,7 @@ const router = express.Router();
 const db=require('../Database/db')
 // GET endpoint to retrieve form data
 router.get('/api/formdata', (req, res) => {
-    const query = 'SELECT * FROM data';
+    const query = 'SELECT * FROM userdetails';
  
     db.query(query, (err, result) => {
         if (err) {

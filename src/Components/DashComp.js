@@ -163,7 +163,7 @@ const Data = () => {
                                     <input
                                         type="text"
                                         placeholder="Search Clients..."
-                                        className="pl-14 px-4 py-2 w-[1100px] border border-black border-1 rounded"
+                                        className="pl-14 px-4 py-2 md:w-[1000px] border border-black border-1 rounded"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                     />
