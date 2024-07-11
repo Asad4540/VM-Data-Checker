@@ -8,7 +8,7 @@ import { IoMdDownload } from "react-icons/io";
 import Pagination from './Pagination'; // Import the Pagination component
 import * as XLSX from 'xlsx'; // Import xlsx library
 import { UilSearch } from '@iconscout/react-unicons';
-
+ 
 const Data = () => {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -20,15 +20,15 @@ const Data = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 10; // Set the number of items per page
-
+ 
     const apiUrls = {
         microsoft: "http://localhost:3001/microsoft/data/api/micro",
         azure: "http://localhost:3001/azure/data/api/azure",
-        servicenow: "http://localhost:3001/data/api/formdata",
+        userdetails: "http://localhost:3001/data/api/formdata",
         nice: "http://localhost:3001/nice/api/formdata",
         qflow: "http://localhost:3001/qflow/api/formdata"
     };
-
+ 
     useEffect(() => {
         if (searchTerm) {
             const filtered = data.filter(item =>
@@ -42,20 +42,20 @@ const Data = () => {
             setFilteredData(data);
         }
     }, [searchTerm, data]);
-
+ 
     const handleProductChange = (event) => {
         setSelectedProduct(event.target.value);
     };
-
+ 
     const handleGetReport = () => {
         if (!selectedProduct) {
             setError(new Error("Please select a product."));
             return;
         }
-
+ 
         setLoading(true);
         setError(null);
-
+ 
         fetch(apiUrls[selectedProduct])
             .then((response) => {
                 if (!response.ok) {
@@ -65,17 +65,17 @@ const Data = () => {
             })
             .then((data) => {
                 let filtered = data;
-
+ 
                 if (startDate && endDate) {
                     filtered = filtered.filter(item => {
-                        const itemDate = new Date(item.created_at);
+                        const itemDate = new Date(item.createdAt);
                         let lastDate = new Date(endDate);
                         lastDate.setDate(lastDate.getDate() + 1);
                         return itemDate > startDate && itemDate < lastDate;
                     });
                 }
-
-                filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+ 
+                filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setData(filtered);
                 setFilteredData(filtered);
                 setLoading(false);
@@ -85,12 +85,12 @@ const Data = () => {
                 setLoading(false);
             });
     };
-
+ 
     const handleDownloadExcel = () => {
         const worksheet = XLSX.utils.json_to_sheet(filteredData);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
-
+ 
         const now = new Date();
         const formatDate = (date) => {
             const dd = String(date.getDate()).padStart(2, '0');
@@ -100,17 +100,17 @@ const Data = () => {
             const min = String(date.getMinutes()).padStart(2, '0');
             return `${dd}/${mm}/${yyyy} time:${hh}:${min}`;
         };
-
+ 
         const timestamp = formatDate(now);
         const filename = `date:${timestamp}.xlsx`;
         XLSX.writeFile(workbook, filename);
     };
-
+ 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
+ 
     return (
         <>
             <div className='ml-[100px] mt-[70px] mr-[10px]'>
@@ -131,7 +131,7 @@ const Data = () => {
                                             <option value="" disabled hidden>Select Client</option>
                                             <option value="microsoft">Microsoft</option>
                                             <option value="azure">Azure</option>
-                                            <option value="servicenow">ServiceNow</option>
+                                            <option value="userdetails">ServiceNow</option>
                                             <option value="nice">Nice</option>
                                             <option value="qflow">Q-Flow</option>
                                         </select>
@@ -149,13 +149,13 @@ const Data = () => {
                                 </div>
                             </form>
                         </div>
-
+ 
                         <div className='flex justify-center items-center mt-5'>
                             <button className='md:px-9 px-1 py-2 rounded-md mt-3 bg-red-500 text-gray-50 font-semibold hover:bg-red-600' onClick={handleGetReport}>
                                 Fetch Online<IoMdDownload className='inline ml-1 text-xl' />
                             </button>
                         </div>
-
+ 
                         <div className="-mt-10">
                             <div className='flex justify-between items-center'>
                                 <div className="mt-14 mb-1">
@@ -163,7 +163,7 @@ const Data = () => {
                                     <input
                                         type="text"
                                         placeholder="Search Clients..."
-                                        className="pl-14 px-4 py-2 md:w-[1000px] border border-black border-1 rounded"
+                                        className="pl-14 px-4 py-2 w-[800px] border rounded"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                     />
@@ -181,45 +181,50 @@ const Data = () => {
                                     <div className='overflow-x-auto overflow-y-auto max-h-[320px] border border-gray-300'>
                                         <table className='table-auto w-full border border-black border-1px'>
                                             <thead>
-                                                <tr className='bg-blue-800 text-gray-50' >
+                                            <tr className='bg-blue-800 text-gray-50' >
                                                     <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Sr No.</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Product</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>First Name</th>
+                                                   <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>First Name</th>
                                                     <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Last Name</th>
                                                     <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Email</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Company Name</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Job Title</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Phone</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Company</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>EmployeeRange</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Job Role</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Department</th>
                                                     <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Country</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Challenges</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Technology Refresh</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Target Environment</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Migration Manager</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Last Refresh</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Open Challenges</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Consent Checkbox</th>
-                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>Created At</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>fileUrl</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>privacy</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>unique_token</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>optintype</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>CreatedAt</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>singleOptInTime</th>
+                                                    <th className='px-4 py-2 border border-black border-1px sticky top-[-2px] bg-blue-800 z-10'>doubleOptInTime</th>
+                                                   
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {currentData.map((item, index) => (
-                                                    <tr key={index} className='border '>
-                                                        <td className='border border-black border-1px text-center'>{indexOfFirstItem + index + 1}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.product}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.firstName}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.LastName}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.email}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.companyName}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.jobTitle}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.country}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.challenges}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.technologyRefresh}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.targetEnvironment}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.migrationManager}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.lastRefresh}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.openChallenges}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.consentCheckbox}</td>
-                                                        <td className='border border-black border-1px text-center p-2'>{item.created_at}</td>
-                                                    </tr>
+                                               <tr key={index} className='border '>
+                                               <td className='border border-black border-1px text-center'>{indexOfFirstItem + index + 1}</td>
+                                            
+                                               <td className='border border-black border-1px text-center p-2'>{item.FirstName}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.LastName}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.email}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.Phone}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.Company}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.EmployeeRange}</td>
+                                              <td className='border border-black border-1px text-center p-2'>{item.Jobrole}</td>
+                                              <td className='border border-black border-1px text-center p-2'>{item.Department}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.Country}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.fileUrl}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.privacy}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.unique_token}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.optintype}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.createdAt}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.singleOptInTime}</td>
+                                               <td className='border border-black border-1px text-center p-2'>{item.doubleOptInTime}</td>
+                                               
+                                           </tr>
                                                 ))}
                                             </tbody>
                                         </table>
@@ -247,7 +252,7 @@ const Data = () => {
                                     </div>
                                 </>
                             )}
-                            {!loading && !error && currentData.length === 0 && <div className='md:mt-20'><p className='md:text-2xl font-bold text-center'>Select a client from dropdown to see available Data</p></div>}
+                            {!loading && !error && currentData.length === 0 && <p>No data available</p>}
                         </div>
                     </div>
                 </div>
@@ -255,5 +260,5 @@ const Data = () => {
         </>
     );
 };
-
+ 
 export default Data;
