@@ -175,7 +175,7 @@ const Data = () => {
                                 </div>
                             </div>
                             {loading && <p>Loading...</p>}
-                            {error && <p>Error: {error.message}</p>}
+                            {error && <p className='md:text-3xl font-bold text-center md:pt-5'>Error: {error.message}</p>}
                             {!loading && !error && currentData.length > 0 && (
                                 <>
                                     <div className='overflow-x-auto overflow-y-auto max-h-[320px] border border-gray-300'>
@@ -252,7 +252,7 @@ const Data = () => {
                                     </div>
                                 </>
                             )}
-                            {!loading && !error && currentData.length === 0 && <p>No data available</p>}
+                            {!loading && !error && currentData.length === 0 && <p className='md:text-3xl font-bold md:pt-5 text-center'>No data available</p>}
                         </div>
                     </div>
                 </div>
